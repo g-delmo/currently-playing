@@ -4,7 +4,6 @@ body {
   font-family: "JetBrains Mono", monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #0b0d0f;
   min-height: 100vh;
 }
 

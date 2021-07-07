@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useLastFM } from "use-last-fm";
+import dayjs from "dayjs"
 
 const Column = styled.div`
   display: flex;
@@ -9,6 +10,11 @@ const Column = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background: rgba(11, 13, 15, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: rgba(17, 12, 46, 0.3) 0px 48px 100px 0px;
+  backdrop-filter: blur(20px);
 `;
 
 const TimeText = styled.span`
@@ -21,13 +27,17 @@ const TimeText = styled.span`
 const Text = styled.span`
   color: white;
   margin-bottom: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const SongInfo = styled.div`
   display: flex;
   background: #0e0f13;
   padding: 1rem;
-  width: 300px;
+  width: 400px;
+  border-radius: 6px;
 `;
 
 const Image = styled.img`
@@ -39,6 +49,7 @@ const Image = styled.img`
 const Col = styled.div`
   display: flex;
   flex-direction: column;
+  width: calc(400px - 80px - 2rem);
 `;
 
 const SongName = styled.span`
@@ -46,6 +57,9 @@ const SongName = styled.span`
   font-weight: 500;
   font-size: 20px;
   margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const SongArtist = styled.span`
@@ -53,6 +67,9 @@ const SongArtist = styled.span`
   font-weight: 500;
   font-size: 18px;
   margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const App = () => {
@@ -61,8 +78,7 @@ const App = () => {
   const [time, setTime] = useState("");
 
   setInterval(() => {
-    const date = new Date();
-    setTime(`${date.getHours()}:${date.getMinutes()}`);
+    setTime(dayjs().format("H:MM:ss"));
   }, 1000);
 
   return (

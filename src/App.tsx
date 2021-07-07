@@ -78,7 +78,7 @@ const App = () => {
   const [time, setTime] = useState("");
 
   setInterval(() => {
-    setTime(dayjs().format("H:MM:ss"));
+    setTime(dayjs().format("H:mm:ss"));
   }, 1000);
 
   return (

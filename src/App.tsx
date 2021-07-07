@@ -10,7 +10,7 @@ const Column = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(11, 13, 15, 0.8);
+  background: rgba(11, 13, 15, 0.6);
   padding: 20px;
   border-radius: 8px;
   box-shadow: rgba(17, 12, 46, 0.3) 0px 48px 100px 0px;

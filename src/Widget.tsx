@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useLastFM } from "use-last-fm";
 import dayjs from "dayjs";
+import { useLocation, useParams } from "react-router-dom";
 
 const Column = styled.div`
   display: flex;
@@ -19,14 +20,14 @@ const Column = styled.div`
 `;
 
 const TimeText = styled.span<{ color?: string }>`
-  color: ${(props) => props.color};
+  color: ${(props) => `#${props.color}`};
   font-size: 60px;
   font-weight: 600;
   margin-bottom: 1rem;
 `;
 
 const Text = styled.span<{ color?: string }>`
-  color: ${({ color }) => color || "white"};
+  color: ${(props) => `#${props.color || "fff"}`};
   margin-bottom: 0.5rem;
   white-space: nowrap;
   overflow: hidden;
@@ -54,7 +55,7 @@ const Col = styled.div`
 `;
 
 const SongName = styled.span<{ color: string }>`
-  color: ${(props) => props.color};
+  color: ${(props) => `#${props.color}`};
   font-weight: 500;
   font-size: 20px;
   margin-bottom: 2px;
@@ -64,7 +65,7 @@ const SongName = styled.span<{ color: string }>`
 `;
 
 const SongArtist = styled.span<{ color: string }>`
-  color: ${(props) => props.color};
+  color: ${(props) => `#${props.color}`};
   font-weight: 500;
   font-size: 18px;
   margin-bottom: 3px;
@@ -90,7 +91,14 @@ const Widget = ({
   albumColor,
   artistColor,
 }: WidgetProps) => {
-  const lastFM = useLastFM(username || "", token || "");
+  const { search } = useLocation();
+  console.log(search);
+  const params = new URLSearchParams(search);
+
+  const lastFM = useLastFM(
+    username || params.get("username") || "",
+    token || params.get("token") || ""
+  );
 
   const [time, setTime] = useState("");
 
@@ -100,7 +108,9 @@ const Widget = ({
 
   return (
     <Column>
-      <TimeText color={timeColor || "#e4416c"}>{time}</TimeText>
+      <TimeText color={timeColor || params.get("timeColor") || "e4416c"}>
+        {time}
+      </TimeText>
       <Text>
         {lastFM.status === "playing"
           ? "Currently Playing:"
@@ -110,13 +120,17 @@ const Widget = ({
         <SongInfo>
           <Image src={lastFM.song.art} />
           <Col>
-            <SongName color={songColor || "#b166cd"}>
+            <SongName color={songColor || params.get("songColor") || "b166cd"}>
               {lastFM.song.name}
             </SongName>
-            <SongArtist color={artistColor || "#00a3ad"}>
+            <SongArtist
+              color={artistColor || params.get("artistColor") || "00a3ad"}
+            >
               {lastFM.song.artist}
             </SongArtist>
-            <Text color={albumColor || "#fff"}>{lastFM.song.album}</Text>
+            <Text color={albumColor || params.get("albumColor") || "fff"}>
+              {lastFM.song.album}
+            </Text>
           </Col>
         </SongInfo>
       )}

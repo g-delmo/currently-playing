@@ -101,17 +101,17 @@ const InlineInputRow = styled.div`
 const ColorBlock = styled.div<{ color: string }>`
   width: 50px;
   border-radius: 4px;
-  background: ${(props) => props.color};
+  background: ${(props) => `#${props.color}`};
   margin-right: 10px;
 `;
 
 const CustomizePage = () => {
   const [lastFMToken, setLastFMToken] = useState("");
   const [username, setUsername] = useState("");
-  const [timeColor, setTimeColor] = useState("#e4416c");
-  const [songColor, setSongColor] = useState("#b166cd");
-  const [artistColor, setArtistColor] = useState("#00a3ad");
-  const [albumColor, setAlbumColor] = useState("#fff");
+  const [timeColor, setTimeColor] = useState("e4416c");
+  const [songColor, setSongColor] = useState("b166cd");
+  const [artistColor, setArtistColor] = useState("00a3ad");
+  const [albumColor, setAlbumColor] = useState("fff");
   const [isCopied, setCopied] = useState(false);
 
   return (
@@ -147,7 +147,7 @@ const CustomizePage = () => {
         <InlineInputRow>
           <ColorBlock color={timeColor} />
           <TextInput
-            placeholder="#FFF"
+            placeholder="FFF"
             value={timeColor}
             onChange={(e) => setTimeColor(e.target.value)}
           />
@@ -156,7 +156,7 @@ const CustomizePage = () => {
         <InlineInputRow>
           <ColorBlock color={songColor} />
           <TextInput
-            placeholder="#FFF"
+            placeholder="FFF"
             value={songColor}
             onChange={(e) => setSongColor(e.target.value)}
           />
@@ -165,7 +165,7 @@ const CustomizePage = () => {
         <InlineInputRow>
           <ColorBlock color={artistColor} />
           <TextInput
-            placeholder="#FFF"
+            placeholder="FFF"
             value={artistColor}
             onChange={(e) => setArtistColor(e.target.value)}
           />
@@ -174,7 +174,7 @@ const CustomizePage = () => {
         <InlineInputRow>
           <ColorBlock color={albumColor} />
           <TextInput
-            placeholder="#FFF"
+            placeholder="FFF"
             value={albumColor}
             onChange={(e) => setAlbumColor(e.target.value)}
           />

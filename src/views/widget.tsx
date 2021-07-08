@@ -157,7 +157,7 @@ const Widget = ({
   useEffect(() => {
     let interval: number;
     if (!isShowTime) {
-      setInterval(() => {
+      interval = setInterval(() => {
         setTime(dayjs().format("H:mm:ss"));
       }, 1000);
     }

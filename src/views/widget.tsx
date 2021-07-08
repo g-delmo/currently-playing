@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import dayjs from "dayjs";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLastFM } from "use-last-fm";
 import { useLocation } from "react-router-dom";
 
@@ -154,10 +154,18 @@ const Widget = ({
     token || params.get("token") || ""
   );
 
-  if (!isShowTime)
-    setInterval(() => {
-      setTime(dayjs().format("H:mm:ss"));
-    }, 1000);
+  useEffect(() => {
+    let interval: number;
+    if (!isShowTime) {
+      setInterval(() => {
+        setTime(dayjs().format("H:mm:ss"));
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isShowTime]);
 
   return (
     <Column

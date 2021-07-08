@@ -136,8 +136,10 @@ const Select = styled.select`
   font-size: 16px;
   color: white;
   font-weight: 600;
-  font-family: "Inter", sans-serif;
-  caret-color: #84f8cc;
+
+  option {
+    background: black;
+  }
 `;
 
 const CustomizePage = () => {

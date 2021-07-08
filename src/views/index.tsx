@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import Widget from "./widget";
+import Widget, { widgetPosition } from "./widget";
 import montereyBg from "../monterey-bg.jpeg";
 
 const Page = styled.div`
@@ -42,12 +42,6 @@ const Label = styled.span`
   font-weight: 500;
   margin-bottom: 7px;
   margin-top: 25px;
-`;
-
-const Small = styled.small`
-  color: rgba(255, 255, 255, 0.5);
-  font-size: small;
-  margin-bottom: 10px;
 `;
 
 const TextInput = styled.input`
@@ -149,7 +143,7 @@ const Select = styled.select`
 const CustomizePage = () => {
   const [lastFMToken, setLastFMToken] = useState("");
   const [username, setUsername] = useState("");
-  const [position, setPosition] = useState("middle");
+  const [position, setPosition] = useState<widgetPosition>("middle");
   const [showTime, setShowTime] = useState(true);
   const [timeColor, setTimeColor] = useState("e4416c");
   const [songColor, setSongColor] = useState("b166cd");
@@ -190,11 +184,8 @@ const CustomizePage = () => {
         />
 
         <Label>Widget Position</Label>
-        <Small>
-          Note that you won't be able to see a difference on the preview here.
-        </Small>
 
-        <Select onChange={(e) => setPosition(e.target.value)}>
+        <Select onChange={(e) => setPosition(e.target.value as widgetPosition)}>
           <option value="middle" selected>
             Middle
           </option>
@@ -262,6 +253,7 @@ const CustomizePage = () => {
             albumColor={albumColor}
             artistColor={artistColor}
             showTime={showTime}
+            position={position}
           />
         </DemoBlock>
         <Button

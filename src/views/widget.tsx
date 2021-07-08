@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useLastFM } from "use-last-fm";
 import { useLocation } from "react-router-dom";
 
-const Column = styled.div<{ position?: string }>`
+const Column = styled.div<{ position?: widgetPosition }>`
   padding: 24px;
 
   ${(props) => {
@@ -16,21 +16,27 @@ const Column = styled.div<{ position?: string }>`
         left: 50%;
         transform: translate(-50%, -50%);
       `;
+    else if (props.position === "top-left")
+      return `
+        position: absolute;
+        top: 0;
+        left: 0;
+      `;
     else if (props.position === "top-right")
       return `
-        position: fixed;
+        position: absolute;
         top: 0;
         right: 0;
       `;
     else if (props.position === "bottom-left")
       return `
-        position: fixed;
+        position: absolute;
         bottom: 0;
         left: 0;
       `;
     else if (props.position === "bottom-right")
       return `
-        position: fixed;
+        position: absolute;
         bottom: 0;
         right: 0;
       `;
@@ -108,10 +114,17 @@ const SongArtist = styled.span<{ color: string }>`
   text-overflow: ellipsis;
 `;
 
+export type widgetPosition =
+  | "middle"
+  | "top-left"
+  | "top-right"
+  | "bottom-left"
+  | "bottom-right";
+
 interface WidgetProps {
   username?: string;
   token?: string;
-  position?: string;
+  position?: widgetPosition;
   timeColor?: string;
   songColor?: string;
   artistColor?: string;
@@ -127,6 +140,7 @@ const Widget = ({
   albumColor,
   artistColor,
   showTime,
+  position,
 }: WidgetProps) => {
   const [time, setTime] = useState("");
 
@@ -146,7 +160,13 @@ const Widget = ({
     }, 1000);
 
   return (
-    <Column position={params.get("position")?.toLowerCase() || "middle"}>
+    <Column
+      position={
+        position ||
+        (params.get("position")?.toLowerCase() as widgetPosition) ||
+        "middle"
+      }
+    >
       <Card>
         {!isShowTime && (
           <TimeText color={timeColor || params.get("timeColor") || "e4416c"}>

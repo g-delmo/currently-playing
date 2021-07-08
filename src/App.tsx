@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import CustomizePage from "./CustomizePage";
-import Widget from "./Widget";
+
+/* Import routes */
+import CustomizePage from "./views/index";
+import Widget from "./views/widget";
 
 const App = () => {
   return (

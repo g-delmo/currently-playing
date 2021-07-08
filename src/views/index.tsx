@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
-import Widget from "./Widget";
-import montereyBg from "./monterey-bg.jpeg";
+import Widget, { widgetPosition } from "./widget";
+import montereyBg from "../monterey-bg.jpeg";
 
 const Page = styled.div`
   min-height: 100vh;
@@ -70,9 +70,11 @@ const LightTitle = styled.span`
 const DemoBlock = styled.div`
   margin-bottom: 25px;
   background-image: url(${montereyBg});
+  background-position: center;
   background-size: cover;
-  height: 400px;
+  height: 65vh;
   width: 600px;
+  overflow: auto;
   position: relative;
   border-radius: 6px;
 `;
@@ -94,6 +96,26 @@ const Button = styled.span<{ success: boolean }>`
   justify-content: center;
 `;
 
+const Checkbox = styled.div<{ checked?: boolean }>`
+  cursor: pointer;
+  border: 1px solid #1c1c1c;
+  background: none;
+  border-radius: 5px;
+  padding: 12px;
+  width: max-content;
+
+  ${(props) => {
+    if (props.checked === true)
+      return `
+        background: #10B981;
+      `;
+  }}
+
+  &:focus {
+    border: 1px solid #651fff;
+  }
+`;
+
 const InlineInputRow = styled.div`
   display: flex;
 `;
@@ -105,9 +127,24 @@ const ColorBlock = styled.div<{ color: string }>`
   margin-right: 10px;
 `;
 
+const Select = styled.select`
+  width: 100%;
+  border: 1px solid #1c1c1c;
+  background: none;
+  border-radius: 5px;
+  padding: 12px 16px;
+  font-size: 16px;
+  color: white;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  caret-color: #84f8cc;
+`;
+
 const CustomizePage = () => {
   const [lastFMToken, setLastFMToken] = useState("");
   const [username, setUsername] = useState("");
+  const [position, setPosition] = useState<widgetPosition>("middle");
+  const [showTime, setShowTime] = useState(true);
   const [timeColor, setTimeColor] = useState("e4416c");
   const [songColor, setSongColor] = useState("b166cd");
   const [artistColor, setArtistColor] = useState("00a3ad");
@@ -125,6 +162,7 @@ const CustomizePage = () => {
           </Link>{" "}
           if you haven't already.
         </Text>
+
         <Label>
           LastFM API Key (
           <Link href="https://www.last.fm/api/account/create" target="_blank">
@@ -137,12 +175,26 @@ const CustomizePage = () => {
           value={lastFMToken}
           onChange={(e) => setLastFMToken(e.target.value)}
         />
+
         <Label>LastFM Username</Label>
         <TextInput
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
+
+        <Label>Widget Position</Label>
+
+        <Select onChange={(e) => setPosition(e.target.value as widgetPosition)}>
+          <option value="middle" selected>
+            Middle
+          </option>
+          <option value="top-left">Top Left</option>
+          <option value="top-right">Top Right</option>
+          <option value="bottom-left">Bottom Left</option>
+          <option value="bottom-right">Bottom Right</option>
+        </Select>
+
         <Label>Time color</Label>
         <InlineInputRow>
           <ColorBlock color={timeColor} />
@@ -152,6 +204,7 @@ const CustomizePage = () => {
             onChange={(e) => setTimeColor(e.target.value)}
           />
         </InlineInputRow>
+
         <Label>Song name color</Label>
         <InlineInputRow>
           <ColorBlock color={songColor} />
@@ -161,6 +214,7 @@ const CustomizePage = () => {
             onChange={(e) => setSongColor(e.target.value)}
           />
         </InlineInputRow>
+
         <Label>Artist name color</Label>
         <InlineInputRow>
           <ColorBlock color={artistColor} />
@@ -170,6 +224,7 @@ const CustomizePage = () => {
             onChange={(e) => setArtistColor(e.target.value)}
           />
         </InlineInputRow>
+
         <Label>Song name color</Label>
         <InlineInputRow>
           <ColorBlock color={albumColor} />
@@ -179,7 +234,14 @@ const CustomizePage = () => {
             onChange={(e) => setAlbumColor(e.target.value)}
           />
         </InlineInputRow>
+
+        <Label>Show time</Label>
+        <Checkbox
+          checked={showTime}
+          onClick={() => setShowTime((value) => !value)}
+        />
       </Col>
+
       <Col style={{ marginLeft: "100px", marginRight: "20px" }}>
         <LightTitle>Preview</LightTitle>
         <DemoBlock>
@@ -190,13 +252,15 @@ const CustomizePage = () => {
             timeColor={timeColor}
             albumColor={albumColor}
             artistColor={artistColor}
+            showTime={showTime}
+            position={position}
           />
         </DemoBlock>
         <Button
           success={isCopied}
           onClick={() => {
             navigator.clipboard.writeText(
-              `https://currently-playing-seven.vercel.app/widget?token=${lastFMToken}&username=${username}&songColor=${songColor}&timeColor=${timeColor}&albumColor=${albumColor}&artistColor=${artistColor}`
+              `https://currently-playing-seven.vercel.app/widget?token=${lastFMToken}&username=${username}&position=${position}&showTime=${showTime}&songColor=${songColor}&timeColor=${timeColor}&albumColor=${albumColor}&artistColor=${artistColor}`
             );
             setCopied(true);
             setTimeout(() => {

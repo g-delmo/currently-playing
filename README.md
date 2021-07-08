@@ -6,3 +6,6 @@ A widget for [Plash](https://sindresorhus.com/plash) that displays your Spotify 
 You can customize it to your needs and generate a link you can use inside Plash.
 
 ![preview-thumbnail](https://user-images.githubusercontent.com/59506882/124844845-a23d9c80-df95-11eb-87ed-eafba6b8a91f.png)
+
+## Acknowledgements
+- [Alistair Smith](https://github.com/alii) - Author of [use-last-fm](https://github.com/alii/use-last-fm) (used here)

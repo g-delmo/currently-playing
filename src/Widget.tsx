@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useLastFM } from "use-last-fm";
 import dayjs from "dayjs";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Column = styled.div`
   display: flex;

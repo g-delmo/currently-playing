@@ -1,7 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Widget, { widgetPosition } from "./widget";
-import montereyBg from "../monterey-bg.jpeg";
+import montereyBg from "../assets/monterey-bg.jpeg";
+import GitHubStars from "../components/GitHubStars";
 
 const Page = styled.div`
   min-height: 100vh;
@@ -155,6 +156,7 @@ const CustomizePage = () => {
 
   return (
     <Page>
+      <GitHubStars />
       <Col style={{ marginLeft: "50px" }}>
         <Title>Customize your widget</Title>
         <Text>

@@ -7,36 +7,32 @@ import { useLocation } from "react-router-dom";
 
 const Column = styled.div<{ position?: widgetPosition }>`
   padding: 24px;
+  position: absolute;
 
   ${(props) => {
     if (!props.position || props.position === "middle")
-      return `
-        position: absolute;
+      return ` 
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
       `;
     else if (props.position === "top-left")
       return `
-        position: absolute;
         top: 0;
         left: 0;
       `;
     else if (props.position === "top-right")
       return `
-        position: absolute;
         top: 0;
         right: 0;
       `;
     else if (props.position === "bottom-left")
       return `
-        position: absolute;
         bottom: 0;
         left: 0;
       `;
     else if (props.position === "bottom-right")
       return `
-        position: absolute;
         bottom: 0;
         right: 0;
       `;
